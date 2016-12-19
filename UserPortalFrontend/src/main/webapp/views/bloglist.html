@@ -1,0 +1,39 @@
+
+<div ng-controller="BlogController as blogCtrl" class="table-responsive">
+	<h2>User List</h2>
+        <table class="table table-hover table-bordered">
+	      <tr><th>ID </th> <th>Name</th> <th>Description</th><th>UserId</th></tr>
+	      <tr ng-repeat="row in blogCtrl.blogs">
+	         <td><span ng-bind="row.blogId"></span></td>
+	         <td><span ng-bind="row.blogName"></span></td>
+	         <td><span ng-bind-html="row.blogDescription"></span></td>
+	         <td><span ng-bind="row.userId"></span></td>
+	         <td>
+	         <div ng-controller="ViewBlogController as view">
+	          <input class="btn btn-info" type="button" ng-click="view.viewblog(row.blogId)" value="View"/>
+		    </div>
+		    <input class="btn btn-info" type="button" ng-click="blogCtrl.deleteBlog(row.blogId)" value="Delete"/>
+		    <input class="btn btn-info" type="button" ng-click="blogCtrl.editBlog(row.blogId)" value="Edit"/>
+		    <input class="btn btn-info" type="button" ng-click="blogCtrl.viewBlog(row.blogId)" value="View" data-toggle="modal" data-target="#myModal" />
+		    <span ng-if="blogCtrl.flag=='updated' && row.blogId==blogCtrl.updatedId" class="msg-success">Blog successfully updated.</span> </td> 
+	      </tr>	
+	</table>
+	</div>
+<div ng-controller="ViewBlogController as view">
+
+{{blog.blogId}}
+<p ng-model="view.blog.blogName">
+
+{{currentBlog.blogId}}
+<h2>
+{{currentBlog.blogName}}
+</h2>
+{{currentBlog.blogDescription}}
+{{currentBlog.userId}}
+
+<i>{{currentBlog}}</i>
+</div>
+<script type="text/javascript">
+localStorage.setItem("currentBlog", angular.toJson(currentBlog));
+var currentBlog = localStorage.getItem("currentBlog");
+</script> 
